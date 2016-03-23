@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Data.Entity;
+using System.Linq;
 using System.Web.Mvc;
 using Web.DAL;
 using Web.Models;
@@ -11,9 +12,59 @@ namespace Web.Controllers
         // GET: Account
         public ActionResult Index()
         {
+            return View(db.SysUsers);
+        }
+
+        //新建用户
+        public ActionResult Create()
+        {
             return View();
         }
 
+        [HttpPost]
+        public ActionResult Create(SysUser sysUser)
+        {
+            db.SysUsers.Add(sysUser);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        //修改用户
+        public ActionResult Edit(int id)
+        {
+            SysUser sysUser = db.SysUsers.Find(id);
+            return View(sysUser);
+        }
+        [HttpPost]
+        public ActionResult Edit(SysUser sysUser)
+        {
+            db.Entry(sysUser).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        //删除用户
+        public ActionResult Delete(int id)
+        {
+            SysUser sysUser = db.SysUsers.Find(id);
+            return View(sysUser);
+        }
+        [HttpPost,ActionName("Delete")]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            SysUser sysUser = db.SysUsers.Find(id);
+            db.SysUsers.Remove(sysUser);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Details(int id)
+        {
+            SysUser sysUser = db.SysUsers.Find(id);
+            return View(sysUser);
+        }
+
+        #region CURDdemo
         public ActionResult EFQueryDemo()
         {
             //1,[基本查询] 查询所有的SysUser
@@ -50,13 +101,13 @@ namespace Web.Controllers
 
         public ActionResult EFUpdateDemo()
         {
-            var sysUser = db.SysUsers.FirstOrDefault(u=>u.UserName=="Tom");
+            var sysUser = db.SysUsers.FirstOrDefault(u => u.UserName == "Tom");
             if (sysUser != null)
             {
                 sysUser.UserName = "Tom2";
             }
             db.SaveChanges();
-            return View();            
+            return View();
         }
 
         public ActionResult EFAddDemo()
@@ -92,7 +143,9 @@ namespace Web.Controllers
             db.SaveChanges();
             return View("EFQueryDemo");
         }
+        #endregion
 
+        #region 注册和登陆
         public ActionResult Login()
         {
             ViewBag.LoginState = "登录前。。。";
@@ -133,5 +186,6 @@ namespace Web.Controllers
 
             return View();
         }
+        #endregion
     }
 }
