@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Mvc;
 using Web.DAL;
 using Web.Models;
+using PagedList;
 
 namespace Web.Controllers
 {
@@ -10,9 +11,40 @@ namespace Web.Controllers
     {
         private AccountContext db = new AccountContext();
         // GET: Account
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder,string SearchString,string currentFilter,int? page)
         {
-            return View(db.SysUsers);
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            if (SearchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                SearchString = currentFilter;
+            }
+            ViewBag.CurrentFilter = SearchString;
+
+            var users = from u in db.SysUsers
+                        select u;
+            if (!string.IsNullOrEmpty(SearchString))
+            {
+                users = users.Where(u=>u.UserName.Contains(SearchString));
+            }
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    users = users.OrderByDescending(u=>u.UserName);
+                    break;
+                default:
+                    users = users.OrderBy(u=>u.UserName);
+                    break;
+            }
+
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+
+            return View(users.ToPagedList(pageSize,pageNumber));
         }
 
         //新建用户
@@ -65,40 +97,6 @@ namespace Web.Controllers
         }
 
         #region CURDdemo
-        public ActionResult EFQueryDemo()
-        {
-            //1,[基本查询] 查询所有的SysUser
-            var users = from u in db.SysUsers
-                        select u;//表达式方式
-            users = db.SysUsers;//函数式方式
-
-            //2,[条件查询] 加入查询条件
-            users = from u in db.SysUsers
-                    where u.UserName == "Tom"
-                    select u;//表达式方式
-            users = db.SysUsers.Where(u => u.UserName == "Tom");//函数式方式
-
-            //3,[排序和分页查询]
-            users = (from u in db.SysUsers
-                     orderby u.UserName
-                     select u).Skip(0).Take(5);//表达式方式
-            users = db.SysUsers.OrderBy(u => u.UserName).Skip(0).Take(5);//函数式方式
-
-            //4,[聚合查询]
-            //查user总数
-            var num = db.SysUsers.Count();
-            //查最小ID
-            var minId = db.SysUsers.Min(u => u.ID);
-
-            //5,连接查询
-            var users2 = from ur in db.SysUserRoles
-                         join u in db.SysUsers
-                         on ur.SysUserID equals u.ID
-                         select ur;
-
-            return View();
-        }
-
         public ActionResult EFUpdateDemo()
         {
             var sysUser = db.SysUsers.FirstOrDefault(u => u.UserName == "Tom");
@@ -142,6 +140,40 @@ namespace Web.Controllers
             //3.保存修改
             db.SaveChanges();
             return View("EFQueryDemo");
+        }
+
+        public ActionResult EFQueryDemo()
+        {
+            //1,[基本查询] 查询所有的SysUser
+            var users = from u in db.SysUsers
+                        select u;//表达式方式
+            users = db.SysUsers;//函数式方式
+
+            //2,[条件查询] 加入查询条件
+            users = from u in db.SysUsers
+                    where u.UserName == "Tom"
+                    select u;//表达式方式
+            users = db.SysUsers.Where(u => u.UserName == "Tom");//函数式方式
+
+            //3,[排序和分页查询]
+            users = (from u in db.SysUsers
+                     orderby u.UserName
+                     select u).Skip(0).Take(5);//表达式方式
+            users = db.SysUsers.OrderBy(u => u.UserName).Skip(0).Take(5);//函数式方式
+
+            //4,[聚合查询]
+            //查user总数
+            var num = db.SysUsers.Count();
+            //查最小ID
+            var minId = db.SysUsers.Min(u => u.ID);
+
+            //5,连接查询
+            var users2 = from ur in db.SysUserRoles
+                         join u in db.SysUsers
+                         on ur.SysUserID equals u.ID
+                         select ur;
+
+            return View();
         }
         #endregion
 
@@ -187,5 +219,10 @@ namespace Web.Controllers
             return View();
         }
         #endregion
+
+        public ActionResult HtmlHelper()
+        {
+            return View();
+        }
     }
 }

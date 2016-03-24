@@ -1,0 +1,26 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>HtmlHelper</title>
+</head>
+<body>
+    <div> 
+        @Html.TextBox("Textbox1","val")
+        <br />
+        @Html.TextArea("Textarea1","val",5,15,null)
+        <br />
+        @Html.Password("Password1","val")
+        <br />
+        @Html.DropDownList("DropDownList1",new SelectList(new[] { "1", "2" ,"3"}))
+        <br />
+        @Html.ActionLink("About this Website","About", new { id=1}, new { target = "_blank" })
+    </div>
+</body>
+</html>
