@@ -26,7 +26,7 @@
                     @Html.ActionLink("UserName","Index",new { sortOrder = ViewBag.NameSortParm,currentFilter=ViewBag.CurrentFilter})
                 </th>
                 <th>
-                    Email
+                    @Html.ActionLink("Email", "Index", new { sortOrder = ViewBag.EmailSortParm, currentFilter = ViewBag.CurrentFilter })
                 </th>
                 <th></th>
             </tr>

@@ -402,9 +402,19 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603260355400_InitialCreate.cs" />
+    <Compile Include="Migrations\201603260355400_InitialCreate.Designer.cs">
+      <DependentUpon>201603260355400_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603260958461_AddTestTable.cs" />
+    <Compile Include="Migrations\201603260958461_AddTestTable.Designer.cs">
+      <DependentUpon>201603260958461_AddTestTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\SysRole.cs" />
     <Compile Include="Models\SysUser.cs" />
     <Compile Include="Models\SysUserRole.cs" />
+    <Compile Include="Models\Test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ISysUserRepository.cs" />
     <Compile Include="Repositories\SysUserRepository.cs" />
@@ -574,6 +584,14 @@
     <Folder Include="App_Data\" />
     <Folder Include="fonts\" />
     <Folder Include="ViewModels\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201603260355400_InitialCreate.resx">
+      <DependentUpon>201603260355400_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603260958461_AddTestTable.resx">
+      <DependentUpon>201603260958461_AddTestTable.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

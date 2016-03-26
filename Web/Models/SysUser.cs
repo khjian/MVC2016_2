@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Web.Models
 {
@@ -8,6 +9,7 @@ namespace Web.Models
         public string UserName { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public DateTime CreateDate { get; set; }
         public virtual ICollection<SysUserRole> SysUserRoles { get; set; }
     }
 }

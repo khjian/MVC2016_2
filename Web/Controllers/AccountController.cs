@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using Web.DAL;
 using Web.Models;
 using PagedList;
+using System;
 
 namespace Web.Controllers
 {
@@ -15,6 +16,7 @@ namespace Web.Controllers
         {
             ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParm = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.EmailSortParm = string.IsNullOrEmpty(sortOrder) ? "email_desc" : "";
             if (SearchString != null)
             {
                 page = 1;
@@ -36,6 +38,9 @@ namespace Web.Controllers
                 case "name_desc":
                     users = users.OrderByDescending(u=>u.UserName);
                     break;
+                case "email_desc":
+                    users = users.OrderByDescending(u => u.Email);
+                    break;
                 default:
                     users = users.OrderBy(u=>u.UserName);
                     break;
@@ -44,7 +49,7 @@ namespace Web.Controllers
             int pageSize = 3;
             int pageNumber = (page ?? 1);
 
-            return View(users.ToPagedList(pageSize,pageNumber));
+            return View(users.ToPagedList(pageNumber,pageSize));
         }
 
         //新建用户
@@ -56,6 +61,7 @@ namespace Web.Controllers
         [HttpPost]
         public ActionResult Create(SysUser sysUser)
         {
+            sysUser.CreateDate = DateTime.Now;
             db.SysUsers.Add(sysUser);
             db.SaveChanges();
             return RedirectToAction("Index");
