@@ -14,6 +14,9 @@ namespace Web.Controllers
         // GET: Account
         public ActionResult Index(string sortOrder,string SearchString,string currentFilter,int? page)
         {
+            //更新数据库到最新版本
+            //Database.SetInitializer(new MigrateDatabaseToLatestVersion<AccountContext, Migrations.Configuration>());
+
             ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParm = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.EmailSortParm = string.IsNullOrEmpty(sortOrder) ? "email_desc" : "";

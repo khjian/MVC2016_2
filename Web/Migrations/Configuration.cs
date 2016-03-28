@@ -11,10 +11,10 @@ namespace Web.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
-        protected override void Seed(Web.DAL.AccountContext context)
+        protected override void Seed(DAL.AccountContext context)
         {
             //#region 初始化数据
             //var sysUsers = new List<SysUser>

@@ -410,6 +410,18 @@
     <Compile Include="Migrations\201603260958461_AddTestTable.Designer.cs">
       <DependentUpon>201603260958461_AddTestTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603280210596_AddCreateDateToSysUser.cs" />
+    <Compile Include="Migrations\201603280210596_AddCreateDateToSysUser.Designer.cs">
+      <DependentUpon>201603280210596_AddCreateDateToSysUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603280646519_AddLastLoginTimeToSysUser.cs" />
+    <Compile Include="Migrations\201603280646519_AddLastLoginTimeToSysUser.Designer.cs">
+      <DependentUpon>201603280646519_AddLastLoginTimeToSysUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603280652161_DropLastLoginTimeToSysUser.cs" />
+    <Compile Include="Migrations\201603280652161_DropLastLoginTimeToSysUser.Designer.cs">
+      <DependentUpon>201603280652161_DropLastLoginTimeToSysUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\SysRole.cs" />
     <Compile Include="Models\SysUser.cs" />
@@ -573,6 +585,7 @@
     <Content Include="Views\Shared\_PartialPageWidget.cshtml" />
     <Content Include="Views\MVCDemo\_PartialPageDateTime.cshtml" />
     <Content Include="Views\MVCDemo\SharedDateDemo.cshtml" />
+    <None Include="Properties\PublishProfiles\Release.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -591,6 +604,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603260958461_AddTestTable.resx">
       <DependentUpon>201603260958461_AddTestTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603280210596_AddCreateDateToSysUser.resx">
+      <DependentUpon>201603280210596_AddCreateDateToSysUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603280646519_AddLastLoginTimeToSysUser.resx">
+      <DependentUpon>201603280646519_AddLastLoginTimeToSysUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603280652161_DropLastLoginTimeToSysUser.resx">
+      <DependentUpon>201603280652161_DropLastLoginTimeToSysUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
