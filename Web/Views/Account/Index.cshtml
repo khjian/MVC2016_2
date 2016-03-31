@@ -28,9 +28,12 @@
                 <th>
                     @Html.ActionLink("Email", "Index", new { sortOrder = ViewBag.EmailSortParm, currentFilter = ViewBag.CurrentFilter })
                 </th>
-                <td>
+                <th>
                     CreateDate
-                </td>
+                </th>
+                <th>
+                    Department
+                </th>
                 <th></th>
             </tr>
             @foreach (var item in Model)
@@ -44,6 +47,9 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.CreateDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SysDepartment.DepartmentName)
                     </td>
                     <td>
                         @Html.ActionLink("Details", "Details", new { id = item.ID })

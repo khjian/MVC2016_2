@@ -12,6 +12,7 @@ namespace Web.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
+            //AutomaticMigrationDataLossAllowed = true;
         }
 
         protected override void Seed(DAL.AccountContext context)

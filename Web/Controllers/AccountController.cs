@@ -30,8 +30,9 @@ namespace Web.Controllers
             }
             ViewBag.CurrentFilter = SearchString;
 
-            var users = from u in db.SysUsers
-                        select u;
+            //var users = from u in db.SysUsers
+            //           select u;
+            var users = db.SysUsers.Include(u=>u.SysDepartment);
             if (!string.IsNullOrEmpty(SearchString))
             {
                 users = users.Where(u=>u.UserName.Contains(SearchString));
@@ -64,10 +65,14 @@ namespace Web.Controllers
         [HttpPost]
         public ActionResult Create(SysUser sysUser)
         {
-            sysUser.CreateDate = DateTime.Now;
-            db.SysUsers.Add(sysUser);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                sysUser.CreateDate = DateTime.Now;
+                db.SysUsers.Add(sysUser);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View();
         }
 
         //修改用户
