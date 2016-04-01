@@ -5,6 +5,7 @@ using Web.DAL;
 using Web.Models;
 using PagedList;
 using System;
+using System.Data.SqlClient;
 
 namespace Web.Controllers
 {
@@ -106,7 +107,12 @@ namespace Web.Controllers
 
         public ActionResult Details(int id)
         {
-            SysUser sysUser = db.SysUsers.Find(id);
+            //SysUser sysUser = db.SysUsers.Find(id);
+            string query = "select LoginName as UserName,* from sysuser where ID=@id";
+            SqlParameter[] paras = new SqlParameter[] {
+                new SqlParameter("@id",id)
+            };
+            var sysUser = db.SysUsers.SqlQuery(query, paras).SingleOrDefault();
             return View(sysUser);
         }
 
